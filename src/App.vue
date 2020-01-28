@@ -19,7 +19,7 @@
     </header>
     <section class="grid">
       <app-loader v-if="STATE === 'loading'" />
-      <p v-if="STATE ==='error'">error</p>
+      <p v-if="STATE ==='error'" class="text-2xl text-center ">Oh Uh... <span class="text-brand-red-1">{{ userName }}</span> is probably not a Codewars user...</p>
       <transition-group v-if="STATE === 'success'" class="collection m-8" name="fade">
         <kata-card v-for="kata in katas.data" :kata="kata" :key="kata.id + Math.random()" />
       </transition-group>
