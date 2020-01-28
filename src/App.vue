@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="max-w-5xl mx-auto">
     <header class="mb-24 flex bg-brand-gray-2 rounded-b-lg">
+      <github-corner/>
       <div class="relative m-4 p-4 w-full flex flex-col justify-around items-center rounded-b-lg"> 
         <img style="transform:scale(1.3)" class="m-4" :src="`https://www.codewars.com/users/${userName}/badges/large`" alt />
         <h1 class="m-4 text-center text-xl text-brand-gray-4">{{userName === 'Shaya Ulman' ? 'I' : 'you'}} have completed <span class="text-brand-red-1">{{ katas.data.length }} katas</span> so far!</h1>
@@ -31,12 +32,14 @@
 <script>
 import KataCard from "@/components/KataCard";
 import AppLoader from "@/components/UI/AppLoader";
+import GithubCorner from "@/components/UI/GithubCorner"
  
 export default {
   name: "app",
   components: {
     KataCard,
-    AppLoader
+    AppLoader,
+    GithubCorner
   },
   data() {
     return {
