@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <section
     class="card relative m-2 bg-brand-gray-2 h-56 text-brand-red-1 rounded-lg"
   >
@@ -12,8 +12,10 @@
       />
     </div>
 
-    <div v-if="kata">
+    <div>
+      <app-loader v-if="!kataContent" class="mt-12" />
       <p
+        v-else
         class="p-4 font-thin font-sans text-sm text-brand-white-1 overflow-hidden"
       >
         {{ slicedDescription }}
@@ -41,13 +43,15 @@
 <script>
 import RankBadge from "@/components/RankBadge";
 import ExternalIcon from "@/components/UI/ExternalIcon.vue";
+import AppLoader from "@/components/UI/AppLoader.vue";
 export default {
   props: {
     kata: Object
   },
   components: {
     ExternalIcon,
-    RankBadge
+    RankBadge,
+    AppLoader
   },
   data() {
     return {

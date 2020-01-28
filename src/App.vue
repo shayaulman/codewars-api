@@ -4,7 +4,7 @@
       <div class="relative m-4 p-4 w-full flex flex-col justify-around items-center rounded-b-lg"> 
         <img style="transform:scale(1.3)" class="m-4" :src="`https://www.codewars.com/users/${userName}/badges/large`" alt />
         <h1 class="m-4 text-center text-xl text-brand-gray-4">{{userName === 'Shaya Ulman' ? 'I' : 'you'}} have completed <span class="text-brand-red-1">{{ katas.data.length }} katas</span> so far!</h1>
-        <button @mousedown="$confetti.start({defaultDropRate: 20,particlesPerFrame: 5})" @mouseup="$confetti.stop()" class="mt-12 py-2 px-3 absolute bottom-0 left-0  bg-purple-700 rounded-full hover:opacity-75 focus:outline-none">
+        <button @mousedown="$confetti.start({defaultDropRate: 20,particlesPerFrame: 5})" @mouseup="$confetti.stop()" class="mt-12 py-2 px-3 absolute bottom-0 left-0 bg-purple-700 rounded-full opacity-50 hover:opacity-75 focus:outline-none focus:shadow-outline">
           🎉
         </button>
       </div>
@@ -17,11 +17,12 @@
         </div>
       </div>
     </header>
-    <section v-if="katas" class="grid">
-                <transition-group class="collection m-8" name="fade">
-
-      <kata-card v-for="kata in katas.data" :kata="kata" :key="kata.id + Math.random()" />
-                </transition-group>
+    <section class="grid">
+      <app-loader v-if="STATE === 'loading'" />
+      <p v-if="STATE ==='error'">error</p>
+      <transition-group v-if="STATE === 'success'" class="collection m-8" name="fade">
+        <kata-card v-for="kata in katas.data" :kata="kata" :key="kata.id + Math.random()" />
+      </transition-group>
     </section>
 
   </div>
@@ -29,29 +30,40 @@
 
 <script>
 import KataCard from "@/components/KataCard";
+import AppLoader from "@/components/UI/AppLoader";
  
 export default {
   name: "app",
   components: {
-    KataCard
+    KataCard,
+    AppLoader
   },
   data() {
     return {
       userName: 'Shaya Ulman',
-      katas: ""
+      katas: undefined,
+      STATE: 'loading',
     };
   },
   methods: {
     async fetchKatas() {
-      let response = await fetch(
+      if (this.katas) this.katas.data = []
+      this.STATE = 'loading';
+      fetch(
         `https://heroku-shaya.herokuapp.com/users/${this.userName}/code-challenges/completed?page=0`
-      );
-      if (response.ok) {
-        this.katas = await response.json();
-      } else {
-        alert("HTTP-Error: " + response.status);
-      }
+      ).then(response => response.json()).
+      then(userData => {
+        if (userData.data) {
+        this.STATE ="success"
+        this.katas = userData
+        } else {
+          this.STATE = 'error'
+        }
+         })
+      
     },
+
+    debug() { console.log(this.katas)}
 
 
   },
