@@ -1,0 +1,9 @@
+/* html {
+  @apply max-w-screen;
+} */
+
+body {
+  margin: 0;
+  font-family: "Dosis", sans-serif;
+  @apply bg-brand-gray-3;
+}

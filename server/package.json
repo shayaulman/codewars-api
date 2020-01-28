@@ -1,0 +1,16 @@
+{
+  "name": "codewars-server",
+  "version": "1.0.0",
+  "description": "A simple server to proceed codewars requests",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "author": "Shaya Ulman",
+  "license": "ISC",
+  "dependencies": {
+    "http": "0.0.0",
+    "node-fetch": "^2.6.0"
+  }
+}
