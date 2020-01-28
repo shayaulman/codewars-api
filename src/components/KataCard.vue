@@ -1,43 +1,41 @@
 <template>
-  <transition name="fade">
-    <section
-      class="card relative m-2 bg-brand-gray-2 h-56 text-brand-red-1 rounded-lg"
+  <section
+    class="card relative m-2 bg-brand-gray-2 h-56 text-brand-red-1 rounded-lg"
+  >
+    <div
+      class="p-6 h-16 flex justify-between items-center text-sm bg-brand-black-1 rounded-t-lg"
     >
-      <div
-        class="p-6 h-16 flex justify-between items-center text-sm bg-brand-black-1 rounded-t-lg"
-      >
-        <h1 class="w-48">{{ kata.name }}</h1>
-        <rank-badge
-          v-if="kataContent"
-          :rank="+kataContent['rank']['name'].match(/\d+/)[0]"
-        />
-      </div>
+      <h1 class="w-48">{{ kata.name }}</h1>
+      <rank-badge
+        v-if="kataContent"
+        :rank="+kataContent['rank']['name'].match(/\d+/)[0]"
+      />
+    </div>
 
-      <div v-if="kata">
-        <p
-          class="p-4 font-thin font-sans text-sm text-brand-white-1 overflow-hidden"
-        >
-          {{ slicedDescription }}
+    <div v-if="kata">
+      <p
+        class="p-4 font-thin font-sans text-sm text-brand-white-1 overflow-hidden"
+      >
+        {{ slicedDescription }}
+      </p>
+      <div
+        class="w-full px-4 absolute bottom-0 flex justify-between items-center"
+      >
+        <p class="py-3  text-brand-blue-1 text-xs font-hairline">
+          completed at
+          {{
+            kata.completedAt
+              .split("")
+              .splice(0, 10)
+              .join("")
+          }}
         </p>
-        <div
-          class="w-full px-4 absolute bottom-0 flex justify-between items-center"
-        >
-          <p class="py-3  text-brand-blue-1 text-xs font-hairline">
-            completed at
-            {{
-              kata.completedAt
-                .split("")
-                .splice(0, 10)
-                .join("")
-            }}
-          </p>
-          <a :href="'https://www.codewars.com/kata/' + kata.id" target="_blank"
-            ><external-icon
-          /></a>
-        </div>
+        <a :href="'https://www.codewars.com/kata/' + kata.id" target="_blank"
+          ><external-icon
+        /></a>
       </div>
-    </section>
-  </transition>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -93,6 +91,8 @@ export default {
 
 <style lang="scss" scoped>
 .card {
+  min-width: 300px;
+  max-width: 300px;
   transition: 0.3s ease;
   &:hover {
     transform: translateY(-1px);
